@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+        </style>
+    <style>
+        body{
+            font-family: 'Raleway', sans-serif;
+            background-color: beige;
+        }
+        #card{
+            width: 640px;
+            display: inline-block;
+            border: 5px solid turquoise;
+            margin-right: 30px;
+            margin-bottom: 30px;
+        }
+        img{
+            width: 640px;
+            height: 640px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let requestURL = 'ezquiz.json'; 
+        let request = new XMLHttpRequest(); 
+        request.onreadystatechange = function () { 
+            if (request.readyState == 4 && request.status == 200) {             
+                dataReportStatus(JSON.parse(request.responseText));            
+            } }; 
+        request.open("GET", requestURL, true); 
+        request.send(); 
+        
+        function dataReportStatus(data) { 
+            let write ="";
+            for (let i = 0;  i<data.tracks.items.length; i++) {   
+                write += "<div id='card'>";
+                write += "<img src='"+data.tracks.items[i].album.images[0].url+"'>"+"<b>&nbsp;&nbsp;&nbsp;"+data.tracks.items[i].album.name+"</b><br>";
+                write += "&nbsp;&nbsp;&nbsp;Artist:"+data.tracks.items[i].album.artists[0].name+"<br>" + "&nbsp;&nbsp;&nbsp;Release date: " + data.tracks.items[i].album.release_date
+                + "<br>" + "&nbsp;&nbsp;&nbsp;Available :" + data.tracks.items[0].album.available_markets.length+"<br><br></div>";         
+            } 
+            document.body.innerHTML += write;
+           
+        }
+    </script> 
+</body>
+</html>
